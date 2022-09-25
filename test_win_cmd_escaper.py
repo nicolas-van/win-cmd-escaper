@@ -13,9 +13,16 @@ class Test(unittest.TestCase):
         self.run_and_assert("hello")
         self.run_and_assert("hello world")
 
-    def test_all_ascii_characters(self):
+    def test_all_ascii_characters_basic(self):
         
         for i in range(32, 127):
             character = chr(i)
             with self.subTest(character=character):
                 self.run_and_assert(f"{character}")
+
+    def test_all_ascii_characters_in_text(self):
+        
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"a{character}b")
