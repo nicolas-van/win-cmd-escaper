@@ -52,4 +52,4 @@ def escape_powershell_argument_script(str):
             acc += _pw_script_char_to_escape_sequence[c](str[0:i], str[i+1:])
         else:
             acc += c
-    return f"@'{acc}'@"
+    return f"'{acc}'"
