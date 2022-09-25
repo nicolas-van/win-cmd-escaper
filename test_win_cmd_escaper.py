@@ -13,16 +13,50 @@ class Test(unittest.TestCase):
         self.run_and_assert("hello")
         self.run_and_assert("hello world")
 
-    def test_all_ascii_characters_basic(self):
-        
+    def test_ascii_only_char(self):
         for i in range(32, 127):
             character = chr(i)
             with self.subTest(character=character):
                 self.run_and_assert(f"{character}")
 
-    def test_all_ascii_characters_in_text(self):
-        
+    def test_ascii_starts_text(self):
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"{character}a")
+
+    def test_ascii_ends_text(self):
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"a{character}")
+
+    def test_ascii_in_text(self):
         for i in range(32, 127):
             character = chr(i)
             with self.subTest(character=character):
                 self.run_and_assert(f"a{character}b")
+
+    def test_ascii_doubled_only_char(self):
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"{character}{character}")
+
+    def test_ascii_doubled_starts_text(self):
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"{character}{character}a")
+
+    def test_ascii_doubled_ends_text(self):
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"a{character}{character}")
+
+    def test_ascii_doubled_in_text(self):
+        for i in range(32, 127):
+            character = chr(i)
+            with self.subTest(character=character):
+                self.run_and_assert(f"a{character}{character}b")
