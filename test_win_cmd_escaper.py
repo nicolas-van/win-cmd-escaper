@@ -12,6 +12,9 @@ class AllTests:
         self.run_and_assert("hello")
         self.run_and_assert("hello world")
 
+    def test_empty(self):
+        self.run_and_assert("")
+
     def test_ascii_only_char(self):
         for i in range(32, 127):
             character = chr(i)
@@ -74,6 +77,20 @@ class AllTests:
     def test_no_variable_substitution(self):
         self.run_and_assert(r"%a%")
         self.run_and_assert(r"%%a%%")
+
+    def test_backslash(self):
+        self.run_and_assert(r"\\")
+        self.run_and_assert(r"\\\\")
+        self.run_and_assert(r"\\\\\\")
+        self.run_and_assert(r"\\\\\\\\")
+        self.run_and_assert(r"a\\")
+        self.run_and_assert(r"a\\\\")
+        self.run_and_assert(r"a\\\\\\")
+        self.run_and_assert(r"a\\\\\\\\")
+        self.run_and_assert(r"\\a")
+        self.run_and_assert(r"\\\\a")
+        self.run_and_assert(r"\\\\\\a")
+        self.run_and_assert(r"\\\\\\\\a")
 
 
 class CmdScriptTests(unittest.TestCase, AllTests):
