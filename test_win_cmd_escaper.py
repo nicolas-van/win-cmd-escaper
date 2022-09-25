@@ -109,3 +109,12 @@ class CmdPythonSubprocessTests(unittest.TestCase, AllTests):
 
     def run_echoer(self, str):
         return test_utils.run_echoer_with_cmd_through_python_subprocess(str)
+
+
+class PowershellScriptSubprocessTests(unittest.TestCase, AllTests):
+
+    def escape(self, str):
+        return win_cmd_escaper.escape_powershell_argument_script(str)
+
+    def run_echoer(self, str):
+        return test_utils.run_echoer_with_powershell_through_script(str)
