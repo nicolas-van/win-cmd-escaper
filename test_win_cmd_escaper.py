@@ -68,7 +68,7 @@ class AllTests:
         self._test_str("hello\nworld")
         self._test_str("\n\nhello\nworld  this \n is \n the\n\n  time\n\n")
 
-    def test_no_variable_substitution(self):
+    def test_no_variable_substitution_batch(self):
         self._test_str("%a%")
         self._test_str("%%a%%")
 
