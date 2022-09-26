@@ -39,6 +39,7 @@ def escape_cmd_argument_script(str):
 
 _pw_script_char_to_escape_sequence = {
     "'": lambda *args: "''",
+    '"': lambda *args: '\\"',
 }
 
 def escape_powershell_argument_script(str):
