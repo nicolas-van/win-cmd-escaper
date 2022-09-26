@@ -57,7 +57,7 @@ class AllTests:
             character = chr(i)
             self._test_str(f"a{character}{character}b")
 
-    @unittest.skip("Found no way to make it work in CMD")
+    @unittest.skip("Found no way to make it work in both CMD and powershell")
     def test_crlf(self):
         self._test_str("hello\r\nworld")
         self._test_str("\r\n")
