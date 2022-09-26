@@ -4,94 +4,87 @@ import test_ressources.test_utils as test_utils
 
 class AllTests:
 
-    def run_and_assert(self, str):
-        processed = self.run_echoer(self.escape(str))
-        self.assertEqual(processed, str)
+    def _test_str(self, string):
+        with self.subTest(string=string):
+            processed = self.run_echoer(self.escape(string))
+            self.assertEqual(processed, string)
 
     def test_basic_calls(self):
-        self.run_and_assert("hello")
-        self.run_and_assert("hello world")
+        self._test_str("hello")
+        self._test_str("hello world")
 
     def test_empty(self):
-        self.run_and_assert("")
+        self._test_str("")
 
     def test_printable_ascii_only_char(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"{character}")
+            self._test_str(f"{character}")
 
     def test_printable_ascii_starts_text(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"{character}a")
+            self._test_str(f"{character}a")
 
     def test_printable_ascii_ends_text(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"a{character}")
+            self._test_str(f"a{character}")
 
     def test_printable_ascii_in_text(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"a{character}b")
+            self._test_str(f"a{character}b")
 
     def test_printable_ascii_doubled_only_char(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"{character}{character}")
+            self._test_str(f"{character}{character}")
 
     def test_printable_ascii_doubled_starts_text(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"{character}{character}a")
+            self._test_str(f"{character}{character}a")
 
     def test_printable_ascii_doubled_ends_text(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"a{character}{character}")
+            self._test_str(f"a{character}{character}")
 
     def test_printable_ascii_doubled_in_text(self):
         for i in range(32, 127):
             character = chr(i)
-            with self.subTest(character=character):
-                self.run_and_assert(f"a{character}{character}b")
+            self._test_str(f"a{character}{character}b")
 
     @unittest.skip("Found no way to make it work in CMD")
     def test_crlf(self):
-        self.run_and_assert("hello\r\nworld")
-        self.run_and_assert("\r\n")
-        self.run_and_assert("\n\r")
-        self.run_and_assert("\n\n\n\n")
-        self.run_and_assert("\\n")
-        self.run_and_assert("\\r")
-        self.run_and_assert("hello\rworld")
-        self.run_and_assert("hello\nworld")
-        self.run_and_assert("\n\nhello\nworld  this \n is \n the\n\n  time\n\n")
+        self._test_str("hello\r\nworld")
+        self._test_str("\r\n")
+        self._test_str("\n\r")
+        self._test_str("\n\n\n\n")
+        self._test_str("\\n")
+        self._test_str("\\r")
+        self._test_str("hello\rworld")
+        self._test_str("hello\nworld")
+        self._test_str("\n\nhello\nworld  this \n is \n the\n\n  time\n\n")
 
     def test_no_variable_substitution(self):
-        self.run_and_assert("%a%")
-        self.run_and_assert("%%a%%")
+        self._test_str("%a%")
+        self._test_str("%%a%%")
 
     def test_backslash(self):
-        self.run_and_assert("\\")
-        self.run_and_assert("\\\\")
-        self.run_and_assert("\\\\\\")
-        self.run_and_assert("\\\\\\\\")
-        self.run_and_assert("a\\")
-        self.run_and_assert("a\\\\")
-        self.run_and_assert("a\\\\\\")
-        self.run_and_assert("a\\\\\\\\")
-        self.run_and_assert("\\a")
-        self.run_and_assert("\\\\a")
-        self.run_and_assert("\\\\\\a")
-        self.run_and_assert("\\\\\\\\a")
+        self._test_str("\\")
+        self._test_str("\\\\")
+        self._test_str("\\\\\\")
+        self._test_str("\\\\\\\\")
+        self._test_str("a\\")
+        self._test_str("a\\\\")
+        self._test_str("a\\\\\\")
+        self._test_str("a\\\\\\\\")
+        self._test_str("\\a")
+        self._test_str("\\\\a")
+        self._test_str("\\\\\\a")
+        self._test_str("\\\\\\\\a")
 
 
 class CmdScriptTests(unittest.TestCase, AllTests):
