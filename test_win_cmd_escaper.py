@@ -95,6 +95,7 @@ class AllTests:
         self.run_and_assert("\\\\\\\\a")
 
 
+@unittest.skip('')
 class CmdScriptTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
@@ -104,6 +105,7 @@ class CmdScriptTests(unittest.TestCase, AllTests):
         return test_utils.run_echoer_with_cmd_through_script(str)
 
 
+@unittest.skip('')
 class CmdPythonSubprocessTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
