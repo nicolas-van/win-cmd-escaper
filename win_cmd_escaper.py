@@ -37,9 +37,17 @@ def escape_cmd_argument_script(str):
             acc += c
     return f'"{acc}"'
 
+def _pw_double_quotes_handler(previous, next):
+    bs_count = 0
+    for i in range(len(previous) - 1, -1, -1):
+        if previous[i] == '\\':
+            bs_count += 1
+    return ('\\' * bs_count) + '\\"'
+
 _pw_script_char_to_escape_sequence = {
     "'": lambda *args: "''",
-    '"': lambda *args: '\\"',
+    '"': _pw_double_quotes_handler,
+    #'\\': lambda previous, next: '\\\\' if len(next) >= 1 and next[0] == '"' else '\\',
 }
 
 def escape_powershell_argument_script(str):
