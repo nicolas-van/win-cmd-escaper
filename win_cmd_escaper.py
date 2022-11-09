@@ -14,7 +14,16 @@ def escape_cmd_argument_direct(str):
         elif c == '"':
             acc += '""'
         elif c == "\\":
-            acc += "\\\\" if all(x == "\\" for x in str[i+1:]) else "\\"
+            bs_esc = False
+            for j in range(i + 1, len(str) + 1):
+                if j == len(str) + 1 or str[j] == '"':
+                    bs_esc = True
+                    break
+                elif str[j] == "\\":
+                    continue
+                else:
+                    break
+            acc += "\\\\" if bs_esc else "\\"
         else:
             acc += c
     return f'"{acc}"'
@@ -33,7 +42,16 @@ def escape_cmd_argument_script(str):
         elif c == '"':
             acc += '""'
         elif c == "\\":
-            acc += "\\\\" if all(x == "\\" for x in str[i+1:]) else "\\"
+            bs_esc = False
+            for j in range(i + 1, len(str) + 1):
+                if j == len(str) + 1 or str[j] == '"':
+                    bs_esc = True
+                    break
+                elif str[j] == "\\":
+                    continue
+                else:
+                    break
+            acc += "\\\\" if bs_esc else "\\"
         else:
             acc += c
     return f'"{acc}"'
