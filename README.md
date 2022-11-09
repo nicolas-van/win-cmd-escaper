@@ -19,7 +19,7 @@ Also, while this library is in Python, it aims to be a reference implementation 
 
 ## About non-ASCII characters
 
-This library stays on the string level, which means it doesn't use any kind of magic related to Unicode or the current Windows code page. This is by design as it allows to generate valids string that can be copy pasted and encoded as needed, not opaque blobs of bytes.
+This library stays at the string level, which means it doesn't use any kind of magic related to Unicode or the current Windows code page. This is by design as it allows to generate valid strings that can be copy pasted and encoded as needed, not opaque blobs of bytes.
 
 Concretely if you ask "could it work with non-ASCII character?", the answer could vastly depend. You should first know the following details:
 
