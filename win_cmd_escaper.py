@@ -1,10 +1,4 @@
 
-_direct_cmd_char_to_escape_sequence = {
-    '"': lambda *args: '""',
-    "\\": lambda previous, next: "\\\\" if all(x == "\\" for x in next) else "\\"
-}
-
-
 def escape_cmd_argument_direct(str):
     """
     Escapes an argument for the CMD command in Windows.
@@ -12,17 +6,13 @@ def escape_cmd_argument_direct(str):
     acc = ""
     for i in range(len(str)):
         c = str[i]
-        if c in _direct_cmd_char_to_escape_sequence:
-            acc += _direct_cmd_char_to_escape_sequence[c](str[0:i], str[i+1:])
+        if c == '"':
+            acc += '""'
+        elif c == "\\":
+            acc += "\\\\" if all(x == "\\" for x in str[i+1:]) else "\\"
         else:
             acc += c
     return f'"{acc}"'
-
-_script_cmd_char_to_escape_sequence = {
-    "%": lambda *args: "%%",
-    '"': lambda *args: '""',
-    "\\": lambda previous, next: "\\\\" if all(x == "\\" for x in next) else "\\"
-}
 
 def escape_cmd_argument_script(str):
     """
@@ -31,24 +21,15 @@ def escape_cmd_argument_script(str):
     acc = ""
     for i in range(len(str)):
         c = str[i]
-        if c in _script_cmd_char_to_escape_sequence:
-            acc += _script_cmd_char_to_escape_sequence[c](str[0:i], str[i+1:])
+        if c == "%":
+            acc += "%%"
+        elif c == '"':
+            acc += '""'
+        elif c == "\\":
+            acc += "\\\\" if all(x == "\\" for x in str[i+1:]) else "\\"
         else:
             acc += c
     return f'"{acc}"'
-
-def _pw_double_quotes_handler(previous, next):
-    bs_count = 0
-    for i in range(len(previous) - 1, -1, -1):
-        if previous[i] == '\\':
-            bs_count += 1
-    return ('\\' * bs_count) + '\\"'
-
-_pw_script_char_to_escape_sequence = {
-    "'": lambda *args: "''",
-    '"': _pw_double_quotes_handler,
-    #'\\': lambda previous, next: '\\\\' if len(next) >= 1 and next[0] == '"' else '\\',
-}
 
 def escape_powershell_argument_script(str):
     """
@@ -57,8 +38,16 @@ def escape_powershell_argument_script(str):
     acc = ""
     for i in range(len(str)):
         c = str[i]
-        if c in _pw_script_char_to_escape_sequence:
-            acc += _pw_script_char_to_escape_sequence[c](str[0:i], str[i+1:])
+        if c == "'":
+            acc += "''"
+        elif c == '"':
+            bs_count = 0
+            for j in range(i - 1, -1, -1):
+                if str[j] == '\\':
+                    bs_count += 1
+                else:
+                    break
+            acc += ('\\' * bs_count) + '\\"'
         else:
             acc += c
     return f"'{acc}'"
