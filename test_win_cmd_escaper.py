@@ -105,6 +105,9 @@ class AllTests:
         self._test_str('"\\\\')
         self._test_str('"\\\\\\')
 
+    def test_non_ascii(self):
+        self._test_str('Aéèàù')
+
 class CmdScriptTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
