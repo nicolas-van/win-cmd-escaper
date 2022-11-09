@@ -36,7 +36,7 @@ def __escape_cmd_common(str, is_script):
         elif c == "\\":
             bs_esc = False
             for j in range(i + 1, len(str) + 1):
-                if j == len(str) + 1 or str[j] == '"':
+                if j == len(str) or str[j] == '"':
                     bs_esc = True
                     break
                 elif str[j] == "\\":
