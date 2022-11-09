@@ -13,7 +13,6 @@ class AllTests:
         self._test_str("hello")
         self._test_str("hello world")
 
-    @unittest.skip('found no way to make it work in powershell')
     def test_empty(self):
         self._test_str("")
 
@@ -101,8 +100,6 @@ class AllTests:
         self._test_str('"\\\\')
         self._test_str('"\\\\\\')
 
-
-@unittest.skip('')
 class CmdScriptTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
@@ -111,8 +108,6 @@ class CmdScriptTests(unittest.TestCase, AllTests):
     def run_echoer(self, str):
         return test_utils.run_echoer_with_cmd_through_script(str)
 
-
-@unittest.skip('')
 class CmdPythonSubprocessTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
@@ -129,3 +124,7 @@ class PowershellScriptTests(unittest.TestCase, AllTests):
 
     def run_echoer(self, str):
         return test_utils.run_echoer_with_powershell_through_script(str)
+
+    @unittest.skip('found no way to make it work in powershell')
+    def test_empty(self):
+        self._test_str("")
