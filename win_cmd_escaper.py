@@ -1,6 +1,4 @@
 
-from io import UnsupportedOperation
-
 def escape_cmd_argument_direct(str):
     """
     Escapes an argument for the CMD command in Windows.
@@ -28,7 +26,7 @@ def __escape_cmd_common(str, is_script):
     for i in range(len(str)):
         c = str[i]
         if ord(c) < 32:
-            raise UnsupportedOperation("ASCII control codes are not supported")
+            raise ValueError("ASCII control codes are not supported")
         elif is_script and c == "%":
             acc += "%%"
         elif c == '"':
@@ -53,13 +51,13 @@ def escape_powershell_argument_script(str):
     Escapes an argument for Powershell.
     """
     if str == "":
-        raise UnsupportedOperation("Empty strings are not supported")
+        raise ValueError("Empty strings are not supported")
     
     acc = ""
     for i in range(len(str)):
         c = str[i]
         if ord(c) < 32:
-            raise UnsupportedOperation("ASCII control codes are not supported")
+            raise ValueError("ASCII control codes are not supported")
         elif c == "'":
             acc += "''"
         elif c == '"':

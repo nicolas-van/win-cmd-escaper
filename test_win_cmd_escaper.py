@@ -1,3 +1,4 @@
+
 import unittest
 import win_cmd_escaper
 import test_ressources.test_utils as test_utils
@@ -8,6 +9,11 @@ class AllTests:
         with self.subTest(string=string):
             processed = self.run_echoer(self.escape(string))
             self.assertEqual(processed, string)
+
+    def _test_unsupported(self, string):
+        with self.subTest(string=string):
+            with self.assertRaises(ValueError):
+                self.escape(string)
 
     def test_basic_calls(self):
         self._test_str("hello")
@@ -56,17 +62,13 @@ class AllTests:
             character = chr(i)
             self._test_str(f"a{character}{character}b")
 
-    @unittest.skip("Found no way to make it work in both CMD and powershell")
-    def test_crlf(self):
-        self._test_str("hello\r\nworld")
-        self._test_str("\r\n")
-        self._test_str("\n\r")
-        self._test_str("\n\n\n\n")
-        self._test_str("\\n")
-        self._test_str("\\r")
-        self._test_str("hello\rworld")
-        self._test_str("hello\nworld")
-        self._test_str("\n\nhello\nworld  this \n is \n the\n\n  time\n\n")
+    def test_control_characters(self):
+        for i in range(0, 32):
+            character = chr(i)
+            self._test_unsupported(character)
+        self._test_unsupported("\r")
+        self._test_unsupported("\n")
+        self._test_unsupported("\t")
 
     def test_no_variable_substitution_batch(self):
         self._test_str("%a%")
@@ -128,6 +130,5 @@ class PowershellScriptTests(unittest.TestCase, AllTests):
     def run_echoer(self, str):
         return test_utils.run_echoer_with_powershell_through_script(str)
 
-    @unittest.skip('found no way to make it work in powershell')
     def test_empty(self):
-        self._test_str("")
+        self._test_unsupported("")
