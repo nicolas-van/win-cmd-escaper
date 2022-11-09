@@ -9,7 +9,7 @@ Due to the necessity to get the job done with those scripting languages I decide
 ## Known limitations
 
 * ASCII control codes are not supported. This notably includes `\t`, `\r` and `\n`. (There doest't seem to have proper ways to encode these characters in CMD nor Powershell anyway.)
-* Behavior with non-ASCII characters is mostly *unknown* at the current state. Well, what we know is that if you are doing things like encoding a path to file with Latin-1 characters *on a Windows system configured in Latin-1 C locale" it *should* work *most of the time*. Unfortunately CMD, Powershell, and mostly all command line stuff in Windows rely heavily on those damn C locales that are completely inconsistent from one Windows installation to another. And those are mostly impossible to test reliably. So we will probably stay in the dark realm of "we don't know" forever on the point.
+* Behavior with non-ASCII characters is mostly *unknown* at the current state. Well, what we know is that if you are doing things like encoding a path to file with Latin-1 characters *on a Windows system configured in Latin-1 C locale* it *should* work *most of the time*. Unfortunately CMD, Powershell, and mostly all command line stuff in Windows rely heavily on those damn C locales that are completely inconsistent from one Windows installation to another. And those are mostly impossible to test reliably. So we will probably stay in the dark realm of "we don't know" forever on the point.
 * Empty strings are not supported in Powershell. (It doesn't seem to be possible at all to pass an empty string as a command line argument in that *super well designed* language.)
 
 ## Contributing to this project
