@@ -105,8 +105,11 @@ class AllTests:
         self._test_str('"\\\\')
         self._test_str('"\\\\\\')
 
-    def test_non_ascii(self):
+    def test_latin_1(self):
         self._test_str('Aéèàù')
+
+    def test_emoji(self):
+        self._test_str('😊❤️😍😁👍')
 
 class CmdScriptTests(unittest.TestCase, AllTests):
 
