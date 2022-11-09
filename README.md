@@ -15,8 +15,21 @@ Also, while this library is in Python, it aims to be a reference implementation 
 ## Known limitations
 
 * ASCII control codes are not supported. This notably includes `\t`, `\r` and `\n`. (There doest't seem to have proper ways to encode these characters in CMD nor Powershell anyway.)
-* Behavior with non-ASCII characters is mostly *unknown* at the current state. Well, what we know is that if you are doing things like encoding a path to file with Latin-1 characters *on a Windows system configured in Latin-1 C locale* it should work most of the time *if and only if* your `.bat` or `.ps1` is in the same encoding. Unfortunately CMD, Powershell, and mostly all command line stuff in Windows rely heavily on those damn C locales that are completely inconsistent from one Windows installation to another. And those are mostly impossible to test reliably. So we will probably stay in the dark realm of "we don't know" forever on the point.
 * Empty strings are not supported in Powershell. (It doesn't seem to be possible at all to pass an empty string as a command line argument in that *super well designed* language.)
+
+## About non-ASCII characters
+
+This library stays on the string level, which means it doesn't use any kind of magic related to Unicode or the current Windows code page. This is by design as it allows to generate valids string that can be copy pasted and encoded as needed, not opaque blobs of bytes.
+
+Concretely if you ask "could it work with non-ASCII character?", the answer could vastly depend. You should first know the following details:
+
+* CMD doesn't seem to have any form of character encoding handling. For CMD a byte is a byte and will be forwarded as-is to underlying commands.
+* Powershell is the opposite, it has encoding handling. It should be noted that its default encoding is assumed to be Windows' current code page unless you specify a BOM at the beginning of you `.ps1` file. It will then use whatever is specified by the BOM.
+* To be short, Windows command-line arguments characters encoding is a global mess. Some programs will expect them to be in Windows' code page, other to be in UTF-8, some will use some kind of auto-detecting, auto-magic, auto-mojibake-making conversion layer between current code page and Unicode or vice-versa, etc...
+
+Due to all this non-sense, non-ASCII characters in command line arguments is just unreliable on Windows and it will probably stay that way for as long as Microsoft doesn't publicly acnowledge that having C locale not using UTF-8 is both stupid, dysfunctional and racist. That means forever.
+
+Normally, if you try to format a file path containing say, Latin-1 characters, on a Windows using cp-1252 code page, that you save that in a `.bat` or `.ps1` using that same cp-1252 encoding and that your destination program is kind of a "typical" Windows program, it "should" kinda works most of the time. That's about it for any kind of Unicode support we could expect related to command line arguments on Windows.
 
 ## Contributing to this project
 
@@ -26,6 +39,6 @@ Please note that "blog posts", "forum threads" and "official documentation" abou
 
 So if you want to contribute to this project, which you are very welcome to do, please:
 
-* Do not cite any Internet link in the issues supposedly explaining the behavior of CMD or Powershell. I made my point clear regarding the fact I'm very convinced they are a total waste of time.
-* Try to mostly work using the unit tests, they are our one and only source of truth.
+* Do not cite any Internet link in the issues supposedly explaining the behavior of CMD or Powershell. I made my point clear regarding the fact I'm totally convinced they are a total waste of time.
+* Try to mostly work using the unit tests, they are our one and only source of truth in this arsh world.
 * Take into account the fact that the unit tests *must* run in Github Actions using Github's Windows runners.
