@@ -57,7 +57,7 @@ def run_echoer_with_powershell_through_script(str):
 python "{echo_py_path}" --file "{output_file_path}" -- {str}
 """
         cmd_file_name = os.path.join(tmp_folder, "echofile.ps1")
-        with open(cmd_file_name, 'w', encoding=locale.getpreferredencoding()) as f:
+        with open(cmd_file_name, 'w', encoding="utf-8-sig") as f:
             f.write(cmd_file_content)
 
         # perform the call
