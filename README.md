@@ -39,6 +39,6 @@ Please note that "blog posts", "forum threads" and "official documentation" abou
 
 So if you want to contribute to this project, which you are very welcome to do, please:
 
-* Do not cite any Internet link in the issues supposedly explaining the behavior of CMD or Powershell. I made my point clear regarding the fact I'm totally convinced they are a total waste of time.
+* Do not cite any Internet link in the issues supposedly explaining the behavior of CMD or Powershell. If you did not understand already I'm 100% convinced they are a total waste of time.
 * Try to mostly work using the unit tests, they are our one and only source of truth in this arsh world.
 * Take into account the fact that the unit tests *must* run in Github Actions using Github's Windows runners.
