@@ -24,7 +24,7 @@ This library stays at the string level, which means it doesn't use any kind of m
 Concretely if you ask "could it work with non-ASCII character?", the answer could vastly depend. You should first know the following details:
 
 * CMD doesn't seem to have any form of character encoding handling. For CMD a byte is a byte and will be forwarded as-is to underlying commands.
-* Powershell is the opposite, it has encoding handling. It should be noted that its default encoding is assumed to be Windows' current code page unless you specify a BOM at the beginning of you `.ps1` file. It will then use whatever is specified by the BOM.
+* Powershell is the opposite, it has encoding handling. It should be noted that its default encoding is assumed to be Windows' current code page unless you specify a BOM at the beginning of your `.ps1` file. It will then use whatever is specified by the BOM.
 * To be short, Windows command-line arguments characters encoding is a global mess. Some programs will expect them to be in Windows' code page, other to be in UTF-8, some will use some kind of auto-detecting, auto-magic, auto-mojibake-making conversion layer between current code page and Unicode or vice-versa, etc...
 
 Due to all this non-sense, non-ASCII characters in command line arguments is just unreliable on Windows and it will probably stay that way for as long as Microsoft doesn't publicly acnowledge that having C locale not using UTF-8 is both stupid, dysfunctional and racist. That means forever.
