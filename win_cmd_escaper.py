@@ -11,8 +11,6 @@ def escape_cmd_argument_direct(str):
         c = str[i]
         if ord(c) < 32:
             raise UnsupportedOperation("ASCII control codes are not supported")
-        elif ord(c) > 127:
-            raise UnsupportedOperation("Unicode characters are not supported")
         elif c == '"':
             acc += '""'
         elif c == "\\":
@@ -30,8 +28,6 @@ def escape_cmd_argument_script(str):
         c = str[i]
         if ord(c) < 32:
             raise UnsupportedOperation("ASCII control codes are not supported")
-        elif ord(c) > 127:
-            raise UnsupportedOperation("Unicode characters are not supported")
         elif c == "%":
             acc += "%%"
         elif c == '"':
@@ -53,8 +49,6 @@ def escape_powershell_argument_script(str):
         c = str[i]
         if ord(c) < 32:
             raise UnsupportedOperation("ASCII control codes are not supported")
-        elif ord(c) > 127:
-            raise UnsupportedOperation("Unicode characters are not supported")
         elif c == "'":
             acc += "''"
         elif c == '"':
