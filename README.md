@@ -31,7 +31,7 @@ Due to all this non-sense, non-ASCII characters in command line arguments is jus
 
 Normally, if you try to format a file path containing say, Latin-1 characters, on a Windows using cp-1252 code page, that you save that in a `.bat` or `.ps1` using that same cp-1252 encoding and that your destination program is kind of a "typical" Windows program, it "should" kinda works most of the time. That's about it for any kind of Unicode support we could expect related to command line arguments on Windows.
 
-If you can, try to avoid these questions as example using JSON (that has Unicode escapes handling) on top of ASCII for program-to-program communication. You will save yourself a lot of time.
+If you can, I would recommend to try to avoid these questions completely, as example using JSON (that has Unicode escapes handling) on top of ASCII for program-to-program communication. You will save yourself a lot of time.
 
 ## Contributing to this project
 
