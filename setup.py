@@ -7,7 +7,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='win-cmd-escaper',
-    version='0.0.0',
+    version='1.0.0',
     license='MIT',
     author="Nicolas Vanhoren",
     description='A Python library to properly handle escaping of command line arguments in Windows\' CMD.exe and Powershell.',
