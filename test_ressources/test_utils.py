@@ -61,7 +61,7 @@ python "{echo_py_path}" --file "{output_file_path}" -- {str}
             f.write(cmd_file_content)
 
         # perform the call
-        subprocess.check_call(["pwsh", cmd_file_name], stdout=subprocess.DEVNULL)
+        subprocess.check_call(["powershell", cmd_file_name], stdout=subprocess.DEVNULL)
 
         # get the results
         with open(output_file_path, 'r', encoding="utf-8", newline='') as f:
