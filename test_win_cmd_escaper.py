@@ -19,9 +19,6 @@ class AllTests:
         self._test_str("hello")
         self._test_str("hello world")
 
-    def test_empty(self):
-        self._test_str("")
-
     def test_printable_ascii_only_char(self):
         for i in range(32, 127):
             character = chr(i)
@@ -105,36 +102,52 @@ class AllTests:
         self._test_str('"\\\\')
         self._test_str('"\\\\\\')
 
-    def test_latin_1(self):
-        self._test_str('Aéèàù')
+class AllCmdTests(AllTests):
 
-    def test_emoji(self):
-        self._test_str('😊❤️😍😁👍')
+    def test_empty(self):
+        self._test_str("")
 
-class CmdScriptTests(unittest.TestCase, AllTests):
+
+class CmdScriptTests(unittest.TestCase, AllCmdTests):
 
     def escape(self, str):
         return win_cmd_escaper.escape_cmd_argument_script(str)
 
     def run_echoer(self, str):
         return test_utils.run_echoer_with_cmd_through_script(str)
+    
 
-class CmdPythonSubprocessTests(unittest.TestCase, AllTests):
+class CmdPythonSubprocessTests(unittest.TestCase, AllCmdTests):
 
     def escape(self, str):
         return win_cmd_escaper.escape_cmd_argument_direct(str)
 
     def run_echoer(self, str):
         return test_utils.run_echoer_with_cmd_through_python_subprocess(str)
+    
 
-
-class PowershellScriptTests(unittest.TestCase, AllTests):
+class AllPowershellScriptTests(AllTests):
 
     def escape(self, str):
         return win_cmd_escaper.escape_powershell_argument_script(str)
 
+    def test_empty(self):
+        self._test_unsupported("")
+
+    def test_latin_1(self):
+        self._test_str('Aéèàù')
+
+    def test_emoji(self):
+        self._test_str('😊❤️😍😁👍')
+
+
+class PowershellScriptTests(unittest.TestCase, AllPowershellScriptTests):
+
     def run_echoer(self, str):
         return test_utils.run_echoer_with_powershell_through_script(str)
 
-    def test_empty(self):
-        self._test_unsupported("")
+
+class PwshScriptTests(unittest.TestCase, AllPowershellScriptTests):
+
+    def run_echoer(self, str):
+        return test_utils.run_echoer_with_pwsh_through_script(str)

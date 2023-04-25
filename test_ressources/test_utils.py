@@ -48,7 +48,8 @@ def run_echoer_with_cmd_through_python_subprocess(str):
     finally:
         shutil.rmtree(tmp_folder)
 
-def run_echoer_with_powershell_through_script(str):
+
+def __run_echoer_with_powershell_through_script_common(str, executable):
     tmp_folder = tempfile.mkdtemp()
     try:
         # create the bat file
@@ -61,7 +62,7 @@ python "{echo_py_path}" --file "{output_file_path}" -- {str}
             f.write(cmd_file_content)
 
         # perform the call
-        subprocess.check_call(["powershell", cmd_file_name], stdout=subprocess.DEVNULL)
+        subprocess.check_call([executable, cmd_file_name], stdout=subprocess.DEVNULL)
 
         # get the results
         with open(output_file_path, 'r', encoding="utf-8", newline='') as f:
@@ -70,3 +71,11 @@ python "{echo_py_path}" --file "{output_file_path}" -- {str}
         return output_content
     finally:
         shutil.rmtree(tmp_folder)
+
+
+def run_echoer_with_powershell_through_script(str):
+    return __run_echoer_with_powershell_through_script_common(str, 'powershell')
+
+
+def run_echoer_with_pwsh_through_script(str):
+    return __run_echoer_with_powershell_through_script_common(str, 'powershell')
