@@ -1,5 +1,7 @@
 # win-cmd-escaper
 
+[![Windows Tests](https://github.com/nicolas-van/win-cmd-escaper/actions/workflows/python-app.yml/badge.svg)](https://github.com/nicolas-van/win-cmd-escaper/actions/workflows/python-app.yml)
+
 A Python library to properly handle escaping of command line arguments in both Windows' CMD.exe and Powershell.
 
 ## Rationale
