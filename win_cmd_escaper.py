@@ -50,8 +50,6 @@ def escape_powershell_argument_script(str):
     """
     Escapes an argument for Powershell.
     """
-    if str == "":
-        raise ValueError("Empty strings are not supported")
 
     acc = ""
     for i in range(len(str)):

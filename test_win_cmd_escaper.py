@@ -21,6 +21,9 @@ class AllTests:
         self._test_str("hello")
         self._test_str("hello world")
 
+    def test_empty(self):
+        self._test_str("")
+
     def test_printable_ascii_only_char(self):
         for i in range(32, 127):
             character = chr(i)
@@ -126,9 +129,6 @@ class AllTests:
 
 class AllCmdTests(AllTests):
 
-    def test_empty(self):
-        self._test_str("")
-
     def test_other_control_characters(self):
         for c in powershell_supported_control_characters:
             self._test_unsupported(c)
@@ -157,9 +157,6 @@ class PowershellScriptTests(unittest.TestCase, AllTests):
 
     def run_echoer(self, str):
         return test_utils.run_echoer_with_powershell_through_script(str)
-
-    def test_empty(self):
-        self._test_unsupported("")
 
     def test_other_control_characters(self):
         for c in powershell_supported_control_characters:

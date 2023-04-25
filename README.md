@@ -14,9 +14,7 @@ Also, while this library is in Python, it aims to be a reference implementation 
 
 ## Known limitations
 
-* Some common control characters like `\t` and `\n` are supported in Powershell. Other control characters are not.
-* No control characters are supported at all in CMD, including `\t` and `\n`. (There doest't seem to have proper ways to encode these characters in CMD.)
-* Empty strings are not supported in Powershell. (It doesn't seem to be possible at all to pass an empty string in all versions of Powershell.)
+* ASCII control codes are not supported. This notably includes `\t`, `\r` and `\n`. (There doest't seem to have proper ways to encode these characters in CMD nor Powershell anyway.)
 
 ## About non-ASCII characters
 
