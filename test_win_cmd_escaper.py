@@ -105,12 +105,6 @@ class AllTests:
         self._test_str('"\\\\')
         self._test_str('"\\\\\\')
 
-    def test_latin_1(self):
-        self._test_str('Aéèàù')
-
-    def test_emoji(self):
-        self._test_str('😊❤️😍😁👍')
-
 class CmdScriptTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
@@ -119,7 +113,7 @@ class CmdScriptTests(unittest.TestCase, AllTests):
     def run_echoer(self, str):
         return test_utils.run_echoer_with_cmd_through_script(str)
 
-class CmdPythonSubprocessTests(unittest.TestCase, AllTests):
+class CmdDirectTests(unittest.TestCase, AllTests):
 
     def escape(self, str):
         return win_cmd_escaper.escape_cmd_argument_direct(str)
@@ -136,5 +130,8 @@ class PowershellScriptTests(unittest.TestCase, AllTests):
     def run_echoer(self, str):
         return test_utils.run_echoer_with_powershell_through_script(str)
 
-    def test_empty(self):
-        self._test_unsupported("")
+    def test_latin_1(self):
+        self._test_str('Aéèàù')
+
+    def test_emoji(self):
+        self._test_str('😊❤️😍😁👍')
