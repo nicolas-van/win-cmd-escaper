@@ -12,6 +12,7 @@ setup(
     author="Nicolas Vanhoren",
     description='A Python library to properly handle escaping of command line arguments in Windows\' CMD.exe and Powershell.',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     py_modules=["win_cmd_escaper"],
     url='https://github.com/nicolas-van/win-cmd-escaper',
     keywords='windows cmd powershell',
