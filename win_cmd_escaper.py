@@ -1,3 +1,7 @@
+"""
+A module to properly handle escaping of command line arguments in Windows' CMD.exe and Powershell. 
+"""
+
 
 def escape_cmd_argument_direct(str):
     """
