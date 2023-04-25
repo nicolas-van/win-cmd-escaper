@@ -3,6 +3,8 @@ import unittest
 import win_cmd_escaper
 import test_ressources.test_utils as test_utils
 
+powershell_supported_control_characters = ['\n', '\t', '\b', '\v']
+
 class AllTests:
 
     def _test_str(self, string):
@@ -62,17 +64,20 @@ class AllTests:
             character = chr(i)
             self._test_str(f"a{character}{character}b")
 
-    def test_control_characters(self):
+    def test_unsupported_control_characters(self):
         for i in range(0, 32):
             character = chr(i)
+            if character in set(powershell_supported_control_characters):
+                continue
             self._test_unsupported(character)
-        self._test_unsupported("\r")
-        self._test_unsupported("\n")
-        self._test_unsupported("\t")
 
     def test_no_variable_substitution_batch(self):
         self._test_str("%a%")
         self._test_str("%%a%%")
+
+    def test_no_variable_substitution_powershell(self):
+        self._test_str("$a")
+        self._test_str("hello $a world")
 
     def test_backslash(self):
         self._test_str("\\")
@@ -105,7 +110,30 @@ class AllTests:
         self._test_str('"\\\\')
         self._test_str('"\\\\\\')
 
-class CmdScriptTests(unittest.TestCase, AllTests):
+    def test_backticks(self):
+        self._test_str('`')
+        self._test_str('``')
+        self._test_str('```')
+        self._test_str('\\`')
+        self._test_str('\\\\`')
+        self._test_str('\\\\\\`')
+        self._test_str('hello\\`')
+        self._test_str('hello\\\\`')
+        self._test_str('hello\\\\\\`')
+        self._test_str('\\`hello')
+        self._test_str('\\\\`hello')
+        self._test_str('\\\\\\`hello')
+        self._test_str('`\\')
+        self._test_str('`\\\\')
+        self._test_str('`\\\\\\')
+
+class AllCmdTests(AllTests):
+
+    def test_other_control_characters(self):
+        for c in powershell_supported_control_characters:
+            self._test_unsupported(c)
+
+class CmdScriptTests(unittest.TestCase, AllCmdTests):
 
     def escape(self, str):
         return win_cmd_escaper.escape_cmd_argument_script(str)
@@ -113,13 +141,13 @@ class CmdScriptTests(unittest.TestCase, AllTests):
     def run_echoer(self, str):
         return test_utils.run_echoer_with_cmd_through_script(str)
 
-class CmdDirectTests(unittest.TestCase, AllTests):
+class CmdDirectTests(unittest.TestCase, AllCmdTests):
 
     def escape(self, str):
         return win_cmd_escaper.escape_cmd_argument_direct(str)
 
     def run_echoer(self, str):
-        return test_utils.run_echoer_with_cmd_through_python_subprocess(str)
+        return test_utils.run_echoer_with_cmd_direct(str)
 
 
 class PowershellScriptTests(unittest.TestCase, AllTests):
@@ -129,6 +157,10 @@ class PowershellScriptTests(unittest.TestCase, AllTests):
 
     def run_echoer(self, str):
         return test_utils.run_echoer_with_powershell_through_script(str)
+
+    def test_other_control_characters(self):
+        for c in powershell_supported_control_characters:
+            self._test_str(c)
 
     def test_latin_1(self):
         self._test_str('Aéèàù')

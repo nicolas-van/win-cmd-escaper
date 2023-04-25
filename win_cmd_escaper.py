@@ -54,18 +54,22 @@ def escape_powershell_argument_script(str):
     acc = ""
     for i in range(len(str)):
         c = str[i]
-        if ord(c) < 32:
+        if c == '\n':
+            acc += '`n'
+        elif c == '\t':
+            acc += '`t'
+        elif c == '\b':
+            acc += '`b'
+        elif c == '\v':
+            acc += '`v'
+        elif ord(c) < 32:
             raise ValueError("ASCII control codes are not supported")
-        elif c == "'":
-            acc += "''"
-        elif c == '"':
-            bs_count = 0
-            for j in range(i - 1, -1, -1):
-                if str[j] == '\\':
-                    bs_count += 1
-                else:
-                    break
-            acc += ('\\' * bs_count) + '\\"'
+        elif c == "\"":
+            acc += "`\""
+        elif c == '`':
+            acc += "``"
+        elif c == '$':
+            acc += "`$"
         else:
             acc += c
-    return f"'{acc}'"
+    return f'"{acc}"'

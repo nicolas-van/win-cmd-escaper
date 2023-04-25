@@ -3,7 +3,6 @@ import tempfile
 import os
 import shutil
 import subprocess
-import locale
 
 echo_py_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "echo.py"))
 
@@ -30,7 +29,7 @@ python "{echo_py_path}" --file "{output_file_path}" -- {str}
     finally:
         shutil.rmtree(tmp_folder)
 
-def run_echoer_with_cmd_through_python_subprocess(str):
+def run_echoer_with_cmd_direct(str):
     tmp_folder = tempfile.mkdtemp()
     try:
         # create the bat file
