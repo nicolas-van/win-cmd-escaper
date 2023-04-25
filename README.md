@@ -4,6 +4,26 @@
 
 A Python library to properly handle escaping of command line arguments in both Windows' CMD.exe and Powershell.
 
+## Usage
+
+First install with `pip`:
+
+```bash
+pip install win_cmd_escaper
+```
+
+Then import the library and use the functions it provides:
+
+```python
+import win_cmd_escaper
+
+print(win_cmd_escaper.escape_powershell_argument_script("hello world")) # escapes for Powershell
+
+print(win_cmd_escaper.escape_cmd_argument_script("hello world")) # escapes for CMD
+
+print(win_cmd_escaper.escape_cmd_argument_direct("hello world")) # escapes for CMD when using direct calls
+```
+
 ## Rationale
 
 This library was born out of frustration due to the apparent *completely unknown* behavior of CMD and Powershell regarding command line argument parsing. While bash is very well supported on that subject (notably having a [standard Python module](https://docs.python.org/3/library/shlex.html?highlight=shlex#module-shlex) handling both formatting and parsing) that's far from being the case for CMD and Powershell.
